@@ -4,6 +4,7 @@ import LogoutSection from "./LogoutSection";
 import { cookies } from "next/headers";
 
 import NotificationSection from "./NotificationSection";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -19,7 +20,9 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         {token && <NotificationSection token={token} />}
         <nav className="flex justify-between items-center p-4 bg-gray-100">
-          <span className="text-gray-700">Welcome, {username}!</span>
+          <span className="text-gray-700">
+            Welcome, <Link href={"/initial/profile"}>{username}!</Link>
+          </span>
           <LogoutSection />
         </nav>
         <main className="flex-grow p-4">{children}</main>

@@ -39,3 +39,20 @@ export async function fetchNearbyUsers(): Promise<
     return { error: `${error}` };
   }
 }
+
+export async function fetchUserInfo(): Promise<UserInfo | { error: string }> {
+  try {
+    const response = await handleGet(`${API_BASE_URL}/user`);
+
+    if ("error" in response) {
+      throw response.error;
+    }
+
+    const data = await response.json();
+    const user = data as UserInfo;
+
+    return user;
+  } catch (error) {
+    return { error: `${error}` };
+  }
+}
