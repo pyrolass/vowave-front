@@ -44,6 +44,49 @@ export async function login(
     return { error: "Invalid credentials. Please try again." };
   }
 }
+export async function register({
+  username,
+  email,
+  password,
+  lat,
+  lon,
+}: {
+  username: string;
+  email: string;
+  password: string;
+  lat: number;
+  lon: number;
+}): Promise<LoginResponse | { error: string }> {
+  try {
+    const response = await handlePost(`${API_BASE_URL}/auth/sign_up`, {
+      email,
+      password,
+      username,
+      lat: lat,
+      lon: lon,
+    });
+
+    if ("error" in response) {
+      throw new Error("Register failed");
+    }
+
+    const data: LoginResponse = await response.json();
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict" as const,
+    };
+
+    cookies().set("token", data.token, cookieOptions);
+    cookies().set("user_id", data.user_id.toString(), cookieOptions);
+    cookies().set("username", data.username, cookieOptions);
+
+    return data;
+  } catch (error) {
+    return { error: "Invalid credentials. Please try again." };
+  }
+}
 
 export async function logout() {
   cookies().delete("token");
