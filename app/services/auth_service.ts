@@ -24,7 +24,7 @@ export async function login(
     });
 
     if ("error" in response) {
-      throw new Error("Login failed");
+      throw response.error;
     }
 
     const data: LoginResponse = await response.json();
@@ -41,7 +41,7 @@ export async function login(
 
     return data;
   } catch (error) {
-    return { error: "Invalid credentials. Please try again." };
+    return { error: `${error}` };
   }
 }
 export async function register({
@@ -67,7 +67,7 @@ export async function register({
     });
 
     if ("error" in response) {
-      throw new Error("Register failed");
+      throw response.error;
     }
 
     const data: LoginResponse = await response.json();
@@ -84,7 +84,7 @@ export async function register({
 
     return data;
   } catch (error) {
-    return { error: "Invalid credentials. Please try again." };
+    return { error: `${error}` };
   }
 }
 

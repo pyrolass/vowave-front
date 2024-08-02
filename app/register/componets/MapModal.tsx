@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
-const Map = dynamic(() => import("./MapContent"), {
+const MapContent = dynamic(() => import("./MapContent"), {
   loading: () => <p>Loading map...</p>,
   ssr: false,
 });
@@ -11,9 +11,13 @@ const Map = dynamic(() => import("./MapContent"), {
 export default function MapModal({
   isModalOpen,
   setIsModalOpen,
+  position,
+  setPosition,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (value: React.SetStateAction<boolean>) => void;
+  position: [number, number];
+  setPosition: (value: React.SetStateAction<[number, number]>) => void;
 }) {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -29,8 +33,6 @@ export default function MapModal({
     setIsModalOpen(false);
   };
 
-  const position: [number, number] = [51.505, -0.09];
-
   return (
     <Modal
       title="Set Location"
@@ -40,7 +42,9 @@ export default function MapModal({
       width={700}
     >
       <div style={{ height: "400px" }}>
-        {isMounted && <Map position={position} />}
+        {isMounted && (
+          <MapContent position={position} setPosition={setPosition} />
+        )}
       </div>
     </Modal>
   );

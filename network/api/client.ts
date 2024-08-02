@@ -21,12 +21,11 @@ export async function handleGet(
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.message || "Something went wrong");
+      throw errorResponse.message || "Something went wrong";
     }
-
     return response;
   } catch (e) {
-    return { error: `Failed to fetch: ${e}` };
+    return { error: `${e}` };
   }
 }
 
@@ -54,12 +53,12 @@ export async function handlePost(
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.message || "Something went wrong");
+      throw errorResponse.message || "Something went wrong";
     }
 
     return response;
   } catch (e) {
-    return { error: `Failed to fetch: ${e}` };
+    return { error: `${e}` };
   }
 }
 
@@ -87,12 +86,11 @@ export async function handlePut(
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.message || "Something went wrong");
+      throw errorResponse.message || "Something went wrong";
     }
-
     return response;
   } catch (e) {
-    return { error: `Failed to fetch: ${e}` };
+    return { error: `${e}` };
   }
 }
 
@@ -120,12 +118,12 @@ export async function handlePatch(
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.message || "Something went wrong");
+      throw errorResponse.message || "Something went wrong";
     }
 
     return response;
   } catch (e) {
-    return { error: `Failed to fetch: ${e}` };
+    return { error: `${e}` };
   }
 }
 
@@ -153,11 +151,10 @@ export async function handleDelete(
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.message || "Something went wrong");
+      throw errorResponse.message || "Something went wrong";
     }
-
     return response;
   } catch (e) {
-    return { error: `Failed to fetch: ${e}` };
+    return { error: `${e}` };
   }
 }

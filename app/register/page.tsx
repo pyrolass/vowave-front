@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { login, register } from "../services/auth_service";
+import { register } from "../services/auth_service";
 import Link from "next/link";
-import GoogleMapReact from "google-map-react";
 import MapModal from "./componets/MapModal";
 import { Button } from "antd";
 
@@ -12,23 +11,27 @@ export default function RegisterPage() {
   const [error, setError] = useState<string>("");
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 11,
-  };
+  const [position, setPosition] = useState<[number, number]>([51.505, -0.09]);
 
   async function handleSubmit(formData: FormData) {
-    // const result = await register(formData);
-    // if ("error" in result) {
-    //   setError(result.error);
-    // } else {
-    //   // Successful login
-    //   router.push("/initial/home");
-    // }
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const username = formData.get("username") as string;
+
+    const result = await register({
+      username: username,
+      password: password,
+      email: email,
+      lat: position[0],
+      lon: position[1],
+    });
+
+    if ("error" in result) {
+      setError(result.error);
+    } else {
+      // Successful login
+      router.push("/initial/home");
+    }
   }
 
   return (
@@ -86,7 +89,12 @@ export default function RegisterPage() {
           </div>
         </form>
       </div>
-      <MapModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <MapModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        position={position}
+        setPosition={setPosition}
+      />
     </div>
   );
 }
