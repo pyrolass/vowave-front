@@ -30,7 +30,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-wrap">
       {users.map((user) => (
         <UserCard key={user.user_id} user={user} refetch={refetchUsers} />
       ))}
