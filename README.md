@@ -3,3 +3,4 @@
 ## Steps to run
 
 - To run the app type `make` in your command line
+- If you don't have makefile setup run `bun next dev`
