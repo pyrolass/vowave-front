@@ -4,10 +4,22 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { login, register } from "../services/auth_service";
 import Link from "next/link";
+import GoogleMapReact from "google-map-react";
+import MapModal from "./componets/MapModal";
+import { Button } from "antd";
 
 export default function RegisterPage() {
   const [error, setError] = useState<string>("");
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const defaultProps = {
+    center: {
+      lat: 10.99835602,
+      lng: 77.01502627,
+    },
+    zoom: 11,
+  };
 
   async function handleSubmit(formData: FormData) {
     // const result = await register(formData);
@@ -62,6 +74,9 @@ export default function RegisterPage() {
             />
           </div>
           <div className="form-control">
+            <Button onClick={() => setIsModalOpen(true)}>set location</Button>
+          </div>
+          <div className="form-control">
             <button type="submit" className="btn btn-primary w-full">
               Register
             </button>
@@ -71,6 +86,7 @@ export default function RegisterPage() {
           </div>
         </form>
       </div>
+      <MapModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
 }
